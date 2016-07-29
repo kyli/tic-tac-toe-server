@@ -18,7 +18,10 @@ class TicTacToeController < ApplicationController
                      when '2' then ' O '
                    end
       end
-      result += '] , &lt;br&gt;'
+      result += ']'
+      if i != 2
+        result += ', '
+      end
     end
     return result
   end
