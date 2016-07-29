@@ -7,14 +7,15 @@ class TicTacToeController < ApplicationController
   end
 
   def create
-    if not checkToken(params['token'], 'YVyjszmysk7T8Cr299F5Tbb4') then
-      return render json: { :text => 'Incorrect token' }, :status => 400
-    end
+    # if not checkToken(params['token'], 'YVyjszmysk7T8Cr299F5Tbb4') then
+    #   return render json: { :text => 'Incorrect token' }, :status => 400
+    # end
 
     channel = params['channel_id']
     existing = Board.find_by(:channel => channel)
     if existing && existing.next then
-      return render json: { :text => 'There is one game per channel at a time' }
+      existing.destroy
+      # return render json: { :text => 'There is one game per channel at a time' }
     end
 
     userName = params['user_name']
@@ -27,7 +28,7 @@ class TicTacToeController < ApplicationController
 
     newgame = Board.new(:channel => channel, :player1 => userName, :player2 => opponent, :state => '000000000', :next => userName)
     if newgame.save() then
-      response = { :response_type => 'in_channel', :text => 'New game created for ' + userName + ' and ' + opponent + '. ' + userName + '\' move'}
+      response = { :response_type => 'in_channel', :text => 'New game created for ' + userName + ' and ' + opponent + '. ' + userName + '\'s move'}
       render json: response
     else
       render json: { :text => 'Something happened, try again' }
