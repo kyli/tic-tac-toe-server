@@ -18,7 +18,7 @@ class TicTacToeController < ApplicationController
                      when '2' then ' O '
                    end
       end
-      result += '] , \\\n'
+      result += '] , &lt;br&gt;'
     end
     return result
   end
