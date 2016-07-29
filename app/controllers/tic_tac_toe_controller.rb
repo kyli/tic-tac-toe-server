@@ -1,5 +1,7 @@
 class TicTacToeController < ApplicationController
 
+  skip_before_filter :verify_authenticity_token
+
   def checkToken(token, expected)
     return token && token == expected
   end
