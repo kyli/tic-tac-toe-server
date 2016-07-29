@@ -61,7 +61,7 @@ class TicTacToeController < ApplicationController
   end
 
   def move
-    if not checkToken(params['token'], 'pqNgvumzhx5SO6VWqd8YeShN') then
+    if not checkToken(params['token'], 'EKORPm7ibCmSLNMbVycwkR5t') then
       return render json: { :text => 'Incorrect token' }, :status => 400
     end
     channel = params['channel_id']
@@ -87,7 +87,7 @@ class TicTacToeController < ApplicationController
     y = coord[1].to_i
 
     if x < 0 || x > 2 || y < 0 || y > 2 then
-      return render json: { :text => 'Bad command. x y are rows and columns of the grid, must be between 0, 1, and 2' }
+      return render json: { :text => 'Bad command. x y are rows and columns of the grid, must be between 0, 1 and 2' }
     end
 
     existing.state[ x * 3 + y ] = if existing.next == existing.player1 then '1' else '2' end
