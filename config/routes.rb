@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
   post 'tic_tac_toe/create'
+  post 'tic_tac_toe/move'
+  get 'tic_tac_toe/get'
   post 'tic_tac_toe/del'
 
-  get 'tic_tac_toe/get'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
