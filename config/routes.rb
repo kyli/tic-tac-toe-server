@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   post 'tic_tac_toe/create'
+  post 'tic_tac_toe/del'
 
   get 'tic_tac_toe/get'
 
