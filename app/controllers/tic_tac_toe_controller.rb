@@ -12,12 +12,26 @@ class TicTacToeController < ApplicationController
     end
 
     channel = params['channel_id']
+    existing = Board.find_by(:channel => channel)
+    if existing && existing.next then
+      return render json: { :text => 'There is one game per channel at a time' }
+    end
+
     userName = params['user_name']
     text = params['text']
     opponent = /(@)(.*)/.match(text.strip)[2]
 
-    response = { :response_type => 'in_channel', :text => 'New game for ' + userName + ' and ' + opponent}
-    render json: response
+    if !userName || !opponent then
+      return render json: { :text => 'Bad command. /newgame @userid' }
+    end
+
+    newgame = Board.new(:channel => channel, :player1 => userName, :player2 => opponent, :state => '000000000', :next => userName)
+    if newgame.save() then
+      response = { :response_type => 'in_channel', :text => 'New game created for ' + userName + ' and ' + opponent + '. ' + userName + '\' move'}
+      render json: response
+    else
+      render json: { :text => 'Something happened, try again' }
+    end
   end
 
   def get
