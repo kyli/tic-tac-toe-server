@@ -17,7 +17,7 @@ class TicTacToeController < ApplicationController
                      when '2' then 'O '
                    end
       end
-      result += '\\n'
+      result += '\n'
     end
     return result
   end
@@ -89,8 +89,8 @@ class TicTacToeController < ApplicationController
         return render json: { :text => 'The current game is complete between ' + existing.player1 + ' and ' + existing.player2,
                               :attachments => [ :text => existing.state ] }
       else
-        return render json: { :text => formatBoard(existing),
-                              :attachments => [ :text => 'The current game is ongoing between ' + existing.player1 + ' and ' + existing.player2 + '. ' + existing.next + '\'s move'] }
+        return render json: { :text => formatBoard(existing) + 'The current game is ongoing between ' + existing.player1 + ' and ' + existing.player2 + '. ' + existing.next + '\'s move',
+                              :attachments => [ :text => formatBoard(existing) ] }
       end
     end
 
