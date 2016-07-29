@@ -14,7 +14,7 @@ class TicTacToeController < ApplicationController
     text = params['text']
     opponent = /(@)(.*)/.match(text.strip)[2]
 
-    response = { :response_type => 'in_channel', :text => 'New game for ' + userName + ' and ' + opponent, :attachments => [ :text => channel ] }
+    response = { :response_type => 'in_channel', :text => 'New game for ' + userName + ' and ' + opponent}
     render json: response
   end
 
