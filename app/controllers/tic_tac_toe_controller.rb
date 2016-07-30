@@ -145,11 +145,13 @@ class TicTacToeController < ApplicationController
     existing = Board.find_by(:channel => channel)
     if existing then
       if !existing.next then
-        return render json: { :text => 'The current game is complete between ' + existing.player1 + ' and ' + existing.player2,
+        output = { :text => 'The current game is complete between ' + existing.player1 + ' and ' + existing.player2,
                               :attachments => [ :text => formatBoard(existing.state) ] }
+        return render json: unescapeJson(output)
       elsif userName != existing.next then
-        return render json: { :text => 'It is not yet your move. ' + existing.next + '\'s move',
+        output = { :text => 'It is not yet your move. ' + existing.next + '\'s move',
                               :attachments => [ :text => formatBoard(existing.state) ] }
+        return render json: unescapeJson(output)
       end
     end
 
@@ -167,23 +169,26 @@ class TicTacToeController < ApplicationController
     if winner then
       existing.next = nil
       if existing.save()
-        return render json: { :response_type => 'in_channel',
+        output = { :response_type => 'in_channel',
                               :text => current + ' is the winner!',
                               :attachments => [ :text => formatBoard(existing.state) ] }
+        return render json: unescapeJson(output)
       end
     elsif !winner and !(existing.state.include? '0')
       existing.next = nil
       if existing.save()
-        return render json: { :response_type => 'in_channel',
+        output = { :response_type => 'in_channel',
                               :text => current + ' made a move, but the game ended in a draw!',
                               :attachments => [ :text => formatBoard(existing.state) ] }
+        return render json: unescapeJson(output)
       end
     else
       existing.next = if current == existing.player1 then existing.player2 else existing.player1 end
       if existing.save()
-        return render json: { :response_type => 'in_channel',
+        output = { :response_type => 'in_channel',
                               :text => current + ' made a move. ' + existing.next + ' you are up next!',
                               :attachments => [ :text => formatBoard(existing.state) ] }
+        return render json: unescapeJson(output)
       end
     end
 
