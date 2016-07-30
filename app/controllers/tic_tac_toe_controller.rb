@@ -159,19 +159,22 @@ class TicTacToeController < ApplicationController
     if winner then
       existing.next = nil
       if existing.save()
-        return render json: { :text => current + ' is the winner!',
+        return render json: { :response_type => 'in_channel',
+                              :text => current + ' is the winner!',
                               :attachments => [ :text => formatBoard(existing.state) ] }
       end
     elsif !winner and !(existing.state.include? '0')
       existing.next = nil
       if existing.save()
-        return render json: { :text => current + ' made a move, but the game ended in a draw!',
+        return render json: { :response_type => 'in_channel',
+                              :text => current + ' made a move, but the game ended in a draw!',
                               :attachments => [ :text => formatBoard(existing.state) ] }
       end
     else
       existing.next = if current == existing.player1 then existing.player2 else existing.player1 end
       if existing.save()
-        return render json: { :text => current + ' made a move. ' + existing.next + ' you are up next!',
+        return render json: { :response_type => 'in_channel',
+                              :text => current + ' made a move. ' + existing.next + ' you are up next!',
                               :attachments => [ :text => formatBoard(existing.state) ] }
       end
     end
