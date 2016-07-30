@@ -193,5 +193,7 @@ class TicTacToeController < ApplicationController
       existing.destroy
       return render json: { :text => 'Removed the current game for the channel. It was between ' + existing.player1 + " and " + existing.player2 }
     end
+
+    return render json: { :text => 'No ongoing game in the current channel' }
   end
 end
