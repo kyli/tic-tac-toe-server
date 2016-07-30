@@ -103,7 +103,7 @@ class TicTacToeController < ApplicationController
                         :state => '000000000',
                         :next => userName)
     if newgame.save() then
-      marker = if existing.next == existing.player1 then 'X' else 'O' end
+      marker = if newgame.next == newgame.player1 then 'X' else 'O' end
       render json: { :response_type => 'in_channel', :text => 'New game created for ' + userName + ' and ' + opponent + '. @' + userName + '\'s (' + marker + ') move'}
     else
       render json: { :text => 'Some error happened, try again' }
