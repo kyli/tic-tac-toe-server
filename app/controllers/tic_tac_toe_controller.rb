@@ -145,36 +145,36 @@ class TicTacToeController < ApplicationController
       end
     end
 
-    # coord = text.split
-    # x = coord[0].to_i
-    # y = coord[1].to_i
-    #
-    # if x < 0 || x > 2 || y < 0 || y > 2 || existing.state[x * 3 + y] != '0' then
-    #   return render json: { :text => 'Bad command. x y are rows and columns of the grid, must be between 0, 1 and 2. The grid must be currently empty' }
-    # end
-    #
-    # existing.state[ x * 3 + y ] = if existing.next == existing.player1 then '1' else '2' end
-    # winner = checkWinner(existing.state, existing.player1, existing.player2)
-    # current = existing.next
-    # if winner then
-    #   existing.next = nil
-    #   if existing.save()
-    #     return render json: { :text => current + ' is the winner!',
-    #                           :attachments => [ :text => formatBoard(existing.state) ] }
-    #   end
-    # elsif !winner and !(board.state.include? '0')
-    #   existing.next = nil
-    #   if existing.save()
-    #     return render json: { :text => current + ' made a move, but the game ended in a draw!',
-    #                           :attachments => [ :text => formatBoard(existing.state) ] }
-    #   end
-    # else
-    #   existing.next = if current == existing.player1 then existing.player2 else existing.player1 end
-    #   if existing.save()
-    #     return render json: { :text => current + ' made a move. ' + existing.next + ' you are up next!',
-    #                           :attachments => [ :text => formatBoard(existing.state) ] }
-    #   end
-    # end
+    coord = text.split
+    x = coord[0].to_i
+    y = coord[1].to_i
+
+    if x < 0 || x > 2 || y < 0 || y > 2 || existing.state[x * 3 + y] != '0' then
+      return render json: { :text => 'Bad command. x y are rows and columns of the grid, must be between 0, 1 and 2. The grid must be currently empty' }
+    end
+
+    existing.state[ x * 3 + y ] = if existing.next == existing.player1 then '1' else '2' end
+    winner = checkWinner(existing.state, existing.player1, existing.player2)
+    current = existing.next
+    if winner then
+      # existing.next = nil
+      # if existing.save()
+        return render json: { :text => current + ' is the winner!',
+                              :attachments => [ :text => formatBoard(existing.state) ] }
+      # end
+    elsif !winner and !(board.state.include? '0')
+      # existing.next = nil
+      # if existing.save()
+        return render json: { :text => current + ' made a move, but the game ended in a draw!',
+                              :attachments => [ :text => formatBoard(existing.state) ] }
+      # end
+    else
+      # existing.next = if current == existing.player1 then existing.player2 else existing.player1 end
+      # if existing.save()
+        return render json: { :text => current + ' made a move. ' + existing.next + ' you are up next!',
+                              :attachments => [ :text => formatBoard(existing.state) ] }
+      # end
+    end
 
     render json: { :text => 'Some error happened, try again' }
   end
