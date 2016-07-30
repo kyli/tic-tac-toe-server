@@ -15,17 +15,17 @@ class TicTacToeController < ApplicationController
   def formatBoard(state)
     result = ''
     for i in 0..2
-      result += '['
+      # result += '['
       for j in 0..2
         result +=  case state[i * 3 + j]
-                     when '0' then '  _  '
-                     when '1' then '  X  '
-                     when '2' then '  O  '
+                     when '0' then '[  _  ]'
+                     when '1' then '[  X  ]'
+                     when '2' then '[  O  ]'
                    end
       end
-      result += ']'
+      # result += ''
       if i != 2
-        result += ' ,\n '
+        result += '\n'
       end
     end
     return result
