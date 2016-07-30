@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   post 'tic_tac_toe/move'
   get 'tic_tac_toe/get'
   post 'tic_tac_toe/del'
+  get 'tic_tac_toe/help'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

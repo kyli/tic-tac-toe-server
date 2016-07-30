@@ -81,6 +81,14 @@ class TicTacToeController < ApplicationController
     return nil
   end
 
+  def help
+    outputJson = {:text => 'Commands are /newgame, /currentgame, /move and /deletecurrentgame. See examples',
+                  :attachments => {
+                      :text => '/newgame @kaiyi4\n/currentgame\n/move 0 1\n/deletecurrentgame'
+                  } }
+    return render json: unescapeJson(outputJson)
+  end
+
   def create
     if not checkToken(params['token'], 'YVyjszmysk7T8Cr299F5Tbb4') then
       return render json: { :text => 'Incorrect token' }, :status => 400
@@ -213,6 +221,7 @@ class TicTacToeController < ApplicationController
     render json: { :text => 'Some error happened, try again' }
   end
 
+  # delete the current ongoing game in the channel
   def del
     if not checkToken(params['token'], 'eaGsF48NxM8J9bqDyRew1vHD') then
       return render json: { :text => 'Incorrect token' }, :status => 400
