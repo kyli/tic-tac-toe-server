@@ -6,6 +6,7 @@ class TicTacToeController < ApplicationController
     return token && token == expected
   end
 
+  # ruby escapes \ with double \\, to support slack multipline text, we have to unescape json output
   def unescapeJson(jsonObj)
     temp = JSON.generate(jsonObj)
     temp.gsub! '\\\\', '\\'
@@ -31,6 +32,10 @@ class TicTacToeController < ApplicationController
     return result
   end
 
+  # given the game state as a string (0 - represent empty grid, 1 - represent X and 2 - represent O)
+  # determine if the game has a winner by connection a row, column or diagonal
+  #
+  # outputs either the name of player1 or player2, if the game has no winner return nil
   def checkWinner(state, player1, player2)
 
     for i in 0..2
@@ -62,6 +67,7 @@ class TicTacToeController < ApplicationController
       end
     end
 
+    # check diagonals
     if state[0] == state[4] && state[4] == state[8] && state[0] != '0' then
       winner = if state[0] == '1' then player1 else player2 end
       return winner
@@ -96,6 +102,7 @@ class TicTacToeController < ApplicationController
       end
     end
 
+    # opponent username is in the format @username, parsing it out here using regex
     opponent = /(@)(.*)/.match(text.strip)[2]
     newgame = Board.new(:channel => channel,
                         :player1 => userName,
@@ -116,8 +123,10 @@ class TicTacToeController < ApplicationController
     end
     channel = params['channel_id']
 
+    # fidn the current game for this channel
     existing = Board.find_by(:channel => channel)
     if existing then
+      # current game has no next player defined, it has completed
       if !existing.next then
         output = { :text => 'The current game is complete between ' + existing.player1 + ' and ' + existing.player2,
                               :attachments => [ :text => formatBoard(existing.state) ] }
@@ -144,6 +153,7 @@ class TicTacToeController < ApplicationController
       return render json: { :text => 'Bad command. /move x y' }
     end
 
+    # find the current game for the channel
     existing = Board.find_by(:channel => channel)
     if existing then
       if !existing.next then
@@ -156,6 +166,8 @@ class TicTacToeController < ApplicationController
                               :attachments => [ :text => formatBoard(existing.state) ] }
         return render json: unescapeJson(output)
       end
+    else
+      return render json: { :text => 'No ongoing game in the current channel' }
     end
 
     coord = text.split
@@ -169,6 +181,7 @@ class TicTacToeController < ApplicationController
     existing.state[ x * 3 + y ] = if existing.next == existing.player1 then '1' else '2' end
     winner = checkWinner(existing.state, existing.player1, existing.player2)
     current = existing.next
+    # check if the current player has won the game
     if winner then
       existing.next = nil
       if existing.save()
@@ -177,6 +190,7 @@ class TicTacToeController < ApplicationController
                     :attachments => [ :text => formatBoard(existing.state) ] }
         return render json: unescapeJson(output)
       end
+      # check if current game ended in a draw
     elsif !winner and !(existing.state.include? '0')
       existing.next = nil
       if existing.save()
