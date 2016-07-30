@@ -70,9 +70,9 @@ class TicTacToeController < ApplicationController
   end
 
   def create
-    if not checkToken(params['token'], 'YVyjszmysk7T8Cr299F5Tbb4') then
-      return render json: { :text => 'Incorrect token' }, :status => 400
-    end
+    # if not checkToken(params['token'], 'YVyjszmysk7T8Cr299F5Tbb4') then
+    #   return render json: { :text => 'Incorrect token' }, :status => 400
+    # end
 
     channel = params['channel_id']
     userName = params['user_name']
@@ -124,9 +124,9 @@ class TicTacToeController < ApplicationController
   end
 
   def move
-    if not checkToken(params['token'], 'EKORPm7ibCmSLNMbVycwkR5t') then
-      return render json: { :text => 'Incorrect token' }, :status => 400
-    end
+    # if not checkToken(params['token'], 'EKORPm7ibCmSLNMbVycwkR5t') then
+    #   return render json: { :text => 'Incorrect token' }, :status => 400
+    # end
     channel = params['channel_id']
     userName = params['user_name']
     text = params['text']
@@ -157,23 +157,23 @@ class TicTacToeController < ApplicationController
     winner = checkWinner(existing.state, existing.player1, existing.player2)
     current = existing.next
     if winner then
-      # existing.next = nil
-      # if existing.save()
+      existing.next = nil
+      if existing.save()
         return render json: { :text => current + ' is the winner!',
                               :attachments => [ :text => formatBoard(existing.state) ] }
-      # end
-    elsif !winner and !(board.state.include? '0')
-      # existing.next = nil
-      # if existing.save()
+      end
+    elsif !winner and !(existing.state.include? '0')
+      existing.next = nil
+      if existing.save()
         return render json: { :text => current + ' made a move, but the game ended in a draw!',
                               :attachments => [ :text => formatBoard(existing.state) ] }
-      # end
+      end
     else
-      # existing.next = if current == existing.player1 then existing.player2 else existing.player1 end
-      # if existing.save()
+      existing.next = if current == existing.player1 then existing.player2 else existing.player1 end
+      if existing.save()
         return render json: { :text => current + ' made a move. ' + existing.next + ' you are up next!',
                               :attachments => [ :text => formatBoard(existing.state) ] }
-      # end
+      end
     end
 
     render json: { :text => 'Some error happened, try again' }
