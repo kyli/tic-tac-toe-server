@@ -70,9 +70,9 @@ class TicTacToeController < ApplicationController
   end
 
   def create
-    # if not checkToken(params['token'], 'YVyjszmysk7T8Cr299F5Tbb4') then
-    #   return render json: { :text => 'Incorrect token' }, :status => 400
-    # end
+    if not checkToken(params['token'], 'YVyjszmysk7T8Cr299F5Tbb4') then
+      return render json: { :text => 'Incorrect token' }, :status => 400
+    end
 
     channel = params['channel_id']
     userName = params['user_name']
@@ -124,9 +124,9 @@ class TicTacToeController < ApplicationController
   end
 
   def move
-    # if not checkToken(params['token'], 'EKORPm7ibCmSLNMbVycwkR5t') then
-    #   return render json: { :text => 'Incorrect token' }, :status => 400
-    # end
+    if not checkToken(params['token'], 'EKORPm7ibCmSLNMbVycwkR5t') then
+      return render json: { :text => 'Incorrect token' }, :status => 400
+    end
     channel = params['channel_id']
     userName = params['user_name']
     text = params['text']
