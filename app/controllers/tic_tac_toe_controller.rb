@@ -83,7 +83,7 @@ class TicTacToeController < ApplicationController
     channel = params['channel_id']
     userName = params['user_name']
     text = params['text']
-    if !userName || !text then
+    if !userName || !text || text !~ /@.*/ then
       return render json: { :text => 'Bad command. /newgame @username' }
     end
 
@@ -138,7 +138,7 @@ class TicTacToeController < ApplicationController
     channel = params['channel_id']
     userName = params['user_name']
     text = params['text']
-    if !userName || !text then
+    if !userName || !text || text !~ /[0-9]\s+[0-9]/ then
       return render json: { :text => 'Bad command. /move x y' }
     end
 
