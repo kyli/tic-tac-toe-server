@@ -82,9 +82,10 @@ class TicTacToeController < ApplicationController
   end
 
   def help
+    userName = params['user_name']
     outputJson = {:text => 'Commands are /newgame, /currentgame, /move and /deletecurrentgame. See examples',
                   :attachments => [
-                      :text => '/newgame @kaiyi4\n/currentgame\n/move 0 1\n/deletecurrentgame'
+                      :text => '/newgame @' + userName + '\n/currentgame\n/move 0 1\n/deletecurrentgame'
                   ] }
     return render json: unescapeJson(outputJson)
   end
