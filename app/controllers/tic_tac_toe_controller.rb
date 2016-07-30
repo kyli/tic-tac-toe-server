@@ -6,8 +6,7 @@ class TicTacToeController < ApplicationController
     return token && token == expected
   end
 
-  def formatBoard(board)
-    state = board.state
+  def formatBoard(state)
     result = ''
     for i in 0..2
       result += '['
@@ -26,25 +25,48 @@ class TicTacToeController < ApplicationController
     return result
   end
 
-  def checkWinner(board)
-    winner = nil
-    state = board.state
+  def checkWinner(state, player1, player2)
 
-    # for i in 0..2
-    #
-    #   candidate =
-    #
-    #   for j in 1..2
-    #     if state[i * 3 + j] == '0' then
-    #       break
-    #     elsif
-    #
-    #     end
-    #
-    #
-    #   end
-    # end
+    for i in 0..2
 
+      row_candidate = true
+      column_candidate = true
+
+      for j in 1..2
+
+        # check rows
+        if state[i * 3 + j] == '0' || state[i * 3 + j] != state[i * 3 + j - 1] then
+          row_candidate = false
+        elsif row_candidate && state[i * 3 + j] == state[i * 3 + j - 1] then
+          if j == 2 then
+            winner = if state[i * 3 + j] == '1' then player1 else player2 end
+            return winner
+          end
+        end
+
+        # check columns
+        if state[j * 3 + i] == '0' || state[j * 3 + i] != state[(j - 1) * 3 + i] then
+          column_candidate = false
+        elsif column_candidate && state[j * 3 + i] == state[(j - 1) * 3 + i] then
+          if j == 2 then
+            winner = if state[j * 3 + i] == '1' then player1 else player2 end
+            return winner
+          end
+        end
+      end
+    end
+
+    if state[0] == state[4] && state[4] == state[8] && state[0] != '0' then
+      winner = if state[0] == '1' then player1 else player2 end
+      return winner
+    end
+
+    if state[2] == state[4] && state[4] == state[6] && state[2] != '0' then
+      winner = if state[2] == '1' then player1 else player2 end
+      return winner
+    end
+
+    return nil
   end
 
   def create
@@ -77,7 +99,7 @@ class TicTacToeController < ApplicationController
     if newgame.save() then
       render json: { :response_type => 'in_channel', :text => 'New game created for ' + userName + ' and ' + opponent + '. @' + userName + '\'s move'}
     else
-      render json: { :text => 'Something error happened, try again' }
+      render json: { :text => 'Some error happened, try again' }
     end
   end
 
@@ -90,11 +112,11 @@ class TicTacToeController < ApplicationController
     existing = Board.find_by(:channel => channel)
     if existing then
       if !existing.next then
-        return render json: { :text => 'The current game is complete between @' + existing.player1 + ' and @' + existing.player2,
-                              :attachments => [ :text => existing.state ] }
+        return render json: { :text => 'The current game is complete between ' + existing.player1 + ' and ' + existing.player2,
+                              :attachments => [ :text => formatBoard(existing.state) ] }
       else
-        return render json: { :text => 'The current game is ongoing between @' + existing.player1 + ' and @' + existing.player2 + '. @' + existing.next + '\'s move',
-                              :attachments => [ :text => formatBoard(existing) ] }
+        return render json: { :text => 'The current game is ongoing between ' + existing.player1 + ' and ' + existing.player2 + '. ' + existing.next + '\'s move',
+                              :attachments => [ :text => formatBoard(existing.state) ] }
       end
     end
 
@@ -116,10 +138,10 @@ class TicTacToeController < ApplicationController
     if existing then
       if !existing.next then
         return render json: { :text => 'The current game is complete between ' + existing.player1 + ' and ' + existing.player2,
-                              :attachments => [ :text => existing.state ] }
+                              :attachments => [ :text => formatBoard(existing.state) ] }
       elsif userName != existing.next then
         return render json: { :text => 'It is not yet your move. ' + existing.next + '\'s move',
-                              :attachments => [ :text => existing.state ] }
+                              :attachments => [ :text => formatBoard(existing.state) ] }
       end
     end
 
@@ -132,11 +154,29 @@ class TicTacToeController < ApplicationController
     end
 
     existing.state[ x * 3 + y ] = if existing.next == existing.player1 then '1' else '2' end
-    # winner = checkWinner(existing)
+    winner = checkWinner(existing.state, existing.player1, existing.player2)
+    current = existing.next
+    if winner then
+      existing.next = nil
+      if existing.save()
+        return render json: { :text => current + ' is the winner!',
+                              :attachments => [ :text => formatBoard(existing.state) ] }
+      end
+    elsif !winner and !(board.state.include? '0')
+      existing.next = nil
+      if existing.save()
+        return render json: { :text => current + ' made a move, but the game ended in a draw!',
+                              :attachments => [ :text => formatBoard(existing.state) ] }
+      end
+    else
+      existing.next = if current == existing.player1 then existing.player2 else existing.player1 end
+      if existing.save()
+        return render json: { :text => current + ' made a move. ' + existing.next + ' you are up next!',
+                              :attachments => [ :text => formatBoard(existing.state) ] }
+      end
+    end
 
-
-    return render json: { :text => existing.next + ' made a move.',
-                          :attachments => [ :text => existing.state ] }
+    render json: { :text => 'Some error happened, try again' }
   end
 
   def del
