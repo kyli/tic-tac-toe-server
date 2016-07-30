@@ -13,14 +13,14 @@ class TicTacToeController < ApplicationController
       result += '['
       for j in 0..2
         result +=  case state[i * 3 + j]
-                     when '0' then ' _ '
-                     when '1' then ' X '
-                     when '2' then ' O '
+                     when '0' then '  _  '
+                     when '1' then '  X  '
+                     when '2' then '  O  '
                    end
       end
       result += ']'
       if i != 2
-        result += ', '
+        result += ' , '
       end
     end
     return result
@@ -90,10 +90,10 @@ class TicTacToeController < ApplicationController
     existing = Board.find_by(:channel => channel)
     if existing then
       if !existing.next then
-        return render json: { :text => 'The current game is complete between ' + existing.player1 + ' and ' + existing.player2,
+        return render json: { :text => 'The current game is complete between @' + existing.player1 + ' and @' + existing.player2,
                               :attachments => [ :text => existing.state ] }
       else
-        return render json: { :text => 'The current game is ongoing between ' + existing.player1 + ' and ' + existing.player2 + '. ' + existing.next + '\'s move',
+        return render json: { :text => 'The current game is ongoing between @' + existing.player1 + ' and @' + existing.player2 + '. @' + existing.next + '\'s move',
                               :attachments => [ :text => formatBoard(existing) ] }
       end
     end
