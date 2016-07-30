@@ -173,16 +173,16 @@ class TicTacToeController < ApplicationController
       existing.next = nil
       if existing.save()
         output = { :response_type => 'in_channel',
-                              :text => current + ' is the winner!',
-                              :attachments => [ :text => formatBoard(existing.state) ] }
+                    :text => current + ' is the winner!',
+                    :attachments => [ :text => formatBoard(existing.state) ] }
         return render json: unescapeJson(output)
       end
     elsif !winner and !(existing.state.include? '0')
       existing.next = nil
       if existing.save()
         output = { :response_type => 'in_channel',
-                              :text => current + ' made a move, but the game ended in a draw!',
-                              :attachments => [ :text => formatBoard(existing.state) ] }
+                  :text => current + ' made a move, but the game ended in a draw!',
+                  :attachments => [ :text => formatBoard(existing.state) ] }
         return render json: unescapeJson(output)
       end
     else
@@ -190,8 +190,8 @@ class TicTacToeController < ApplicationController
       if existing.save()
         marker = if existing.next == existing.player1 then 'X' else 'O' end
         output = { :response_type => 'in_channel',
-                              :text => current + ' made a move. ' + existing.next + ' (' + marker + ') you are up next!',
-                              :attachments => [ :text => formatBoard(existing.state) ] }
+                  :text => current + ' made a move. ' + existing.next + ' (' + marker + ') you are up next!',
+                  :attachments => [ :text => formatBoard(existing.state) ] }
         return render json: unescapeJson(output)
       end
     end
@@ -208,7 +208,8 @@ class TicTacToeController < ApplicationController
     existing = Board.find_by(:channel => channel)
     if existing then
       existing.destroy
-      return render json: { :text => 'Removed the current game for the channel. It was between ' + existing.player1 + " and " + existing.player2 }
+      return render json: { :response_type => 'in_channel',
+                            :text => 'Removed the current game for the channel. It was between ' + existing.player1 + " and " + existing.player2 }
     end
 
     return render json: { :text => 'No ongoing game in the current channel' }
