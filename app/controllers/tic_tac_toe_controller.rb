@@ -6,6 +6,12 @@ class TicTacToeController < ApplicationController
     return token && token == expected
   end
 
+  def unescapeJson(jsonObj)
+    temp = JSON.generate(jsonObj)
+    temp.gsub! '\\\\', '\\'
+    return temp
+  end
+
   def formatBoard(state)
     result = ''
     for i in 0..2
@@ -19,7 +25,7 @@ class TicTacToeController < ApplicationController
       end
       result += ']'
       if i != 2
-        result += ' , '
+        result += ' ,\n '
       end
     end
     return result
@@ -112,11 +118,13 @@ class TicTacToeController < ApplicationController
     existing = Board.find_by(:channel => channel)
     if existing then
       if !existing.next then
-        return render json: { :text => 'The current game is complete between ' + existing.player1 + ' and ' + existing.player2,
+        output = { :text => 'The current game is complete between ' + existing.player1 + ' and ' + existing.player2,
                               :attachments => [ :text => formatBoard(existing.state) ] }
+        return render json: unescapeJson(output)
       else
-        return render json: { :text => 'The current game is ongoing between ' + existing.player1 + ' and ' + existing.player2 + '. ' + existing.next + '\'s move',
+        output = { :text => 'The current game is ongoing between ' + existing.player1 + ' and ' + existing.player2 + '. ' + existing.next + '\'s move',
                               :attachments => [ :text => formatBoard(existing.state) ] }
+        return render json: unescapeJson(output)
       end
     end
 
