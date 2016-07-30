@@ -122,7 +122,8 @@ class TicTacToeController < ApplicationController
                               :attachments => [ :text => formatBoard(existing.state) ] }
         return render json: unescapeJson(output)
       else
-        output = { :text => 'The current game is ongoing between ' + existing.player1 + ' and ' + existing.player2 + '. ' + existing.next + '\'s move',
+        marker = if existing.next == existing.player1 then 'X' else 'O' end
+        output = { :text => 'The current game is ongoing between ' + existing.player1 + ' and ' + existing.player2 + '. ' + existing.next + '(' + marker + ')\'s move',
                               :attachments => [ :text => formatBoard(existing.state) ] }
         return render json: unescapeJson(output)
       end
@@ -149,7 +150,8 @@ class TicTacToeController < ApplicationController
                               :attachments => [ :text => formatBoard(existing.state) ] }
         return render json: unescapeJson(output)
       elsif userName != existing.next then
-        output = { :text => 'It is not yet your move. ' + existing.next + '\'s move',
+        marker = if existing.next == existing.player1 then 'X' else 'O' end
+        output = { :text => 'It is not yet your move. ' + existing.next + '(' + marker + ')\'s move',
                               :attachments => [ :text => formatBoard(existing.state) ] }
         return render json: unescapeJson(output)
       end
@@ -185,8 +187,9 @@ class TicTacToeController < ApplicationController
     else
       existing.next = if current == existing.player1 then existing.player2 else existing.player1 end
       if existing.save()
+        marker = if existing.next == existing.player1 then 'X' else 'O' end
         output = { :response_type => 'in_channel',
-                              :text => current + ' made a move. ' + existing.next + ' you are up next!',
+                              :text => current + ' made a move. ' + existing.next + '(' + marker + ') you are up next!',
                               :attachments => [ :text => formatBoard(existing.state) ] }
         return render json: unescapeJson(output)
       end

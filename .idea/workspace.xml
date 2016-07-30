@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="9401460f-4cea-426c-afe5-f6d513339302" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/tic_tac_toe_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/tic_tac_toe_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="kaiyi-ttt.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -41,8 +40,8 @@
       <file leaf-file-name="tic_tac_toe_controller.rb" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/tic_tac_toe_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.8301886">
-              <caret line="78" column="5" selection-start-line="78" selection-start-column="5" selection-end-line="80" selection-end-column="7" />
+            <state vertical-scroll-proportion="0.89892185">
+              <caret line="191" column="101" selection-start-line="191" selection-start-column="101" selection-end-line="191" selection-end-column="101" />
               <folding>
                 <element signature="e#181#290#0" expanded="false" />
                 <element signature="e#294#694#0" expanded="false" />
@@ -668,8 +667,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/tic_tac_toe_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.8301886">
-          <caret line="78" column="5" selection-start-line="78" selection-start-column="5" selection-end-line="80" selection-end-column="7" />
+        <state vertical-scroll-proportion="0.89892185">
+          <caret line="191" column="101" selection-start-line="191" selection-start-column="101" selection-end-line="191" selection-end-column="101" />
           <folding>
             <element signature="e#181#290#0" expanded="false" />
             <element signature="e#294#694#0" expanded="false" />
