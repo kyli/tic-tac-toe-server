@@ -43,8 +43,8 @@
       <file leaf-file-name="tic_tac_toe_controller.rb" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/tic_tac_toe_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.09110629">
-              <caret line="212" column="74" selection-start-line="212" selection-start-column="74" selection-end-line="212" selection-end-column="74" />
+            <state vertical-scroll-proportion="-1.4316703">
+              <caret line="121" column="163" selection-start-line="121" selection-start-column="163" selection-end-line="121" selection-end-column="163" />
               <folding>
                 <element signature="e#1094#2385#0" expanded="false" />
               </folding>
@@ -780,8 +780,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/tic_tac_toe_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.09110629">
-          <caret line="212" column="74" selection-start-line="212" selection-start-column="74" selection-end-line="212" selection-end-column="74" />
+        <state vertical-scroll-proportion="-1.4316703">
+          <caret line="121" column="163" selection-start-line="121" selection-start-column="163" selection-end-line="121" selection-end-column="163" />
           <folding>
             <element signature="e#1094#2385#0" expanded="false" />
           </folding>

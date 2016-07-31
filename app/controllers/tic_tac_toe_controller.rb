@@ -119,7 +119,7 @@ class TicTacToeController < ApplicationController
                         :next => userName)
     if newgame.save() then
       marker = if newgame.next == newgame.player1 then ':x:' else ':o:' end
-      render json: { :response_type => 'in_channel', :text => 'New game created for *' + userName + '* and *' + opponent + '*. *' + userName + '*\'s (' + marker + ') move'}
+      render json: { :response_type => 'in_channel', :text => 'New game created for *' + userName + '* and *' + opponent + '*. *' + userName + '*\'s ' + marker + ' move'}
     else
       render json: { :text => 'Some error happened, try again' }
     end
@@ -141,7 +141,7 @@ class TicTacToeController < ApplicationController
         return render json: unescapeJson(output)
       else
         marker = if existing.next == existing.player1 then ':x:' else ':o:' end
-        output = { :text => 'The current game is ongoing between *' + existing.player1 + '* and *' + existing.player2 + '*. *' + existing.next + '*\'s (' + marker + ') move',
+        output = { :text => 'The current game is ongoing between *' + existing.player1 + '* and *' + existing.player2 + '*. *' + existing.next + '*\'s ' + marker + ' move',
                               :attachments => [ :text => formatBoard(existing.state) ] }
         return render json: unescapeJson(output)
       end
@@ -170,7 +170,7 @@ class TicTacToeController < ApplicationController
         return render json: unescapeJson(output)
       elsif userName != existing.next then
         marker = if existing.next == existing.player1 then ':x:' else ':o:' end
-        output = { :text => 'It is not yet your move. *' + existing.next + '*\'s (' + marker + ') move',
+        output = { :text => 'It is not yet your move. *' + existing.next + '*\'s ' + marker + ' move',
                               :attachments => [ :text => formatBoard(existing.state) ] }
         return render json: unescapeJson(output)
       end
@@ -212,7 +212,7 @@ class TicTacToeController < ApplicationController
       if existing.save()
         marker = if existing.next == existing.player1 then ':x:' else ':o:' end
         output = { :response_type => 'in_channel',
-                  :text => '*' + current + '* made a move. *' + existing.next + '* (' + marker + ') you are up next!',
+                  :text => '*' + current + '* made a move. *' + existing.next + '* ' + marker + ' you are up next!',
                   :attachments => [ :text => formatBoard(existing.state) ] }
         return render json: unescapeJson(output)
       end
