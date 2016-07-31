@@ -84,7 +84,7 @@ class TicTacToeController < ApplicationController
   def help
     outputJson = {:text => 'Commands are _/newgame_, _/currentgame_, _/move_ and _/deletecurrentgame_. See examples',
                   :attachments => [
-                      :text => '`/newgame @kaiyi4\n/currentgame\n/move 0 1\n/deletecurrentgame`'
+                      :text => '/newgame @kaiyi4\n/currentgame\n/move 0 1\n/deletecurrentgame'
                   ] }
     return render json: unescapeJson(outputJson)
   end
@@ -98,7 +98,7 @@ class TicTacToeController < ApplicationController
     userName = params['user_name']
     text = params['text']
     if !userName || !text || text !~ /@.*/ then
-      return render json: { :text => 'Bad command. /newgame @username' }
+      return render json: { :text => 'Bad command. _/newgame @username_' }
     end
 
     existing = Board.find_by(:channel => channel)
@@ -119,7 +119,7 @@ class TicTacToeController < ApplicationController
                         :next => userName)
     if newgame.save() then
       marker = if newgame.next == newgame.player1 then 'X' else 'O' end
-      render json: { :response_type => 'in_channel', :text => 'New game created for ' + userName + ' and ' + opponent + '. @' + userName + '\'s (' + marker + ') move'}
+      render json: { :response_type => 'in_channel', :text => 'New game created for *' + userName + '* and *' + opponent + '*. *' + userName + '*\'s (' + marker + ') move'}
     else
       render json: { :text => 'Some error happened, try again' }
     end
@@ -136,12 +136,12 @@ class TicTacToeController < ApplicationController
     if existing then
       # current game has no next player defined, it has completed
       if !existing.next then
-        output = { :text => 'The current game is complete between ' + existing.player1 + ' and ' + existing.player2,
+        output = { :text => 'The current game is complete between *' + existing.player1 + '* and *' + existing.player2 + '*',
                               :attachments => [ :text => formatBoard(existing.state) ] }
         return render json: unescapeJson(output)
       else
         marker = if existing.next == existing.player1 then 'X' else 'O' end
-        output = { :text => 'The current game is ongoing between ' + existing.player1 + ' and ' + existing.player2 + '. ' + existing.next + '\'s (' + marker + ') move',
+        output = { :text => 'The current game is ongoing between *' + existing.player1 + '* and *' + existing.player2 + '*. *' + existing.next + '*\'s (' + marker + ') move',
                               :attachments => [ :text => formatBoard(existing.state) ] }
         return render json: unescapeJson(output)
       end
@@ -158,19 +158,19 @@ class TicTacToeController < ApplicationController
     userName = params['user_name']
     text = params['text']
     if !userName || !text || text !~ /[0-9]\s+[0-9]/ then
-      return render json: { :text => 'Bad command. /move x y' }
+      return render json: { :text => 'Bad command. _/move x y_' }
     end
 
     # find the current game for the channel
     existing = Board.find_by(:channel => channel)
     if existing then
       if !existing.next then
-        output = { :text => 'The current game is complete between ' + existing.player1 + ' and ' + existing.player2,
+        output = { :text => 'The current game is complete between *' + existing.player1 + '* and *' + existing.player2 + '*',
                               :attachments => [ :text => formatBoard(existing.state) ] }
         return render json: unescapeJson(output)
       elsif userName != existing.next then
         marker = if existing.next == existing.player1 then 'X' else 'O' end
-        output = { :text => 'It is not yet your move. ' + existing.next + '\'s (' + marker + ') move',
+        output = { :text => 'It is not yet your move. *' + existing.next + '*\'s (' + marker + ') move',
                               :attachments => [ :text => formatBoard(existing.state) ] }
         return render json: unescapeJson(output)
       end
@@ -212,7 +212,7 @@ class TicTacToeController < ApplicationController
       if existing.save()
         marker = if existing.next == existing.player1 then 'X' else 'O' end
         output = { :response_type => 'in_channel',
-                  :text => current + ' made a move. ' + existing.next + ' (' + marker + ') you are up next!',
+                  :text => current + ' made a move. *' + existing.next + '* (' + marker + ') you are up next!',
                   :attachments => [ :text => formatBoard(existing.state) ] }
         return render json: unescapeJson(output)
       end
@@ -232,7 +232,7 @@ class TicTacToeController < ApplicationController
     if existing then
       existing.destroy
       return render json: { :response_type => 'in_channel',
-                            :text => 'Removed the current game for the channel. It was between ' + existing.player1 + " and " + existing.player2 }
+                            :text => 'Removed the current game for the channel. It was between *' + existing.player1 + '* and *' + existing.player2 + '*' }
     end
 
     return render json: { :text => 'No ongoing game in the current channel' }
