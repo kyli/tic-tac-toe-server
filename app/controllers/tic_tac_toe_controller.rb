@@ -82,9 +82,9 @@ class TicTacToeController < ApplicationController
   end
 
   def help
-    outputJson = {:text => 'Commands are /newgame, /currentgame, /move and /deletecurrentgame. See examples',
+    outputJson = {:text => 'Commands are _/newgame_, _/currentgame_, _/move_ and _/deletecurrentgame_. See examples',
                   :attachments => [
-                      :text => '/newgame @kaiyi4\n/currentgame\n/move 0 1\n/deletecurrentgame'
+                      :text => '`/newgame @kaiyi4\n/currentgame\n/move 0 1\n/deletecurrentgame`'
                   ] }
     return render json: unescapeJson(outputJson)
   end
