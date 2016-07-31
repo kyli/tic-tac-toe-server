@@ -194,7 +194,7 @@ class TicTacToeController < ApplicationController
       existing.next = nil
       if existing.save()
         output = { :response_type => 'in_channel',
-                    :text => current + ' is the winner!',
+                    :text => '*' + current + '* is the winner!',
                     :attachments => [ :text => formatBoard(existing.state) ] }
         return render json: unescapeJson(output)
       end
