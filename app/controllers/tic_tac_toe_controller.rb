@@ -19,9 +19,9 @@ class TicTacToeController < ApplicationController
       result += '['
       for j in 0..2
         result +=  case state[i * 3 + j]
-                     when '0' then '  _  '
-                     when '1' then '  X  '
-                     when '2' then '  O  '
+                     when '0' then '  :white_large_square:  '
+                     when '1' then '  :x:  '
+                     when '2' then '  :o:  '
                    end
       end
       result += ']'
@@ -203,7 +203,7 @@ class TicTacToeController < ApplicationController
       existing.next = nil
       if existing.save()
         output = { :response_type => 'in_channel',
-                  :text => current + ' made a move, but the game ended in a draw!',
+                  :text => '*' + current + '* made a move, but the game ended in a draw!',
                   :attachments => [ :text => formatBoard(existing.state) ] }
         return render json: unescapeJson(output)
       end
@@ -212,7 +212,7 @@ class TicTacToeController < ApplicationController
       if existing.save()
         marker = if existing.next == existing.player1 then 'X' else 'O' end
         output = { :response_type => 'in_channel',
-                  :text => current + ' made a move. *' + existing.next + '* (' + marker + ') you are up next!',
+                  :text => '*' + current + '* made a move. *' + existing.next + '* (' + marker + ') you are up next!',
                   :attachments => [ :text => formatBoard(existing.state) ] }
         return render json: unescapeJson(output)
       end

@@ -43,11 +43,10 @@
       <file leaf-file-name="tic_tac_toe_controller.rb" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/tic_tac_toe_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="3.8422132">
-              <caret line="214" column="77" selection-start-line="214" selection-start-column="77" selection-end-line="214" selection-end-column="77" />
+            <state vertical-scroll-proportion="0.3442623">
+              <caret line="21" column="39" selection-start-line="21" selection-start-column="39" selection-end-line="21" selection-end-column="39" />
               <folding>
-                <element signature="e#395#795#0" expanded="false" />
-                <element signature="e#1071#2362#0" expanded="false" />
+                <element signature="e#1094#2385#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -644,8 +643,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#395#795#0" expanded="false" />
-            <element signature="e#1071#2362#0" expanded="false" />
+            <element signature="e#1094#2385#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -695,8 +693,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#395#795#0" expanded="false" />
-            <element signature="e#1071#2362#0" expanded="false" />
+            <element signature="e#1094#2385#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -783,11 +780,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/tic_tac_toe_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="3.8422132">
-          <caret line="214" column="77" selection-start-line="214" selection-start-column="77" selection-end-line="214" selection-end-column="77" />
+        <state vertical-scroll-proportion="0.3442623">
+          <caret line="21" column="39" selection-start-line="21" selection-start-column="39" selection-end-line="21" selection-end-column="39" />
           <folding>
-            <element signature="e#395#795#0" expanded="false" />
-            <element signature="e#1071#2362#0" expanded="false" />
+            <element signature="e#1094#2385#0" expanded="false" />
           </folding>
         </state>
       </provider>
