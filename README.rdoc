@@ -1,28 +1,19 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a rails app that implements a server for a tic-tac-toe game playable on Slack using slack commands
 
-Things you may want to cover:
+Game commands:
 
-* Ruby version
+* /gamehelp - display different examples of commands
 
-* System dependencies
+* /newgame @username - challenge a user by creating a public tic-tac-toe game in the current channel
 
-* Configuration
+* /move x y - make a move on the 3x3 grid
 
-* Database creation
+* /deletecurrentgame - deletes the current ongoing game in the channel
 
-* Database initialization
+* /currentgame - display a summary of the current ongoing/complete game in the channel
 
-* How to run the test suite
+Other info:
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+* Uses postgres, for compatibility with Heroku
