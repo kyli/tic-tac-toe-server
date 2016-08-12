@@ -1,6 +1,6 @@
 == README
 
-This is a rails app that implements a server for a tic-tac-toe game playable on Slack using slack commands
+This is a rails app that implements a server for a tic-tac-toe game playable on Slack using slash commands
 
 Game commands:
 
