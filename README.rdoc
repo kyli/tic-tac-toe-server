@@ -1,6 +1,20 @@
 == README
 
-This is a rails app that implements a server for a tic-tac-toe game playable on Slack using slash commands
+This is a rails app that implements a server for a tic-tac-toe game playable on Slack using [slash commands](https://api.slack.com/slash-commands)
+
+Features:
+
+* Users can create a new game in any Slack channel by challenging another user (using their username).
+
+* A channel can have at most one game being played at a time.
+
+* Anyone in the channel can run a command to display the current board and list whose turn it is.
+
+* Users can specify their next move, which also publicly displays the board in the channel after the move with a reminder of whose turn it is.
+
+* Only the user whose turn it is can make the next move.
+
+* When a turn is taken that ends the game, the response indicates this along with who won.
 
 Game commands:
 

@@ -90,9 +90,6 @@ class TicTacToeController < ApplicationController
   end
 
   def create
-    if not checkToken(params['token'], 'YVyjszmysk7T8Cr299F5Tbb4') then
-      return render json: { :text => 'Incorrect token' }, :status => 400
-    end
 
     channel = params['channel_id']
     userName = params['user_name']
@@ -126,9 +123,6 @@ class TicTacToeController < ApplicationController
   end
 
   def get
-    if not checkToken(params['token'], 'pqNgvumzhx5SO6VWqd8YeShN') then
-      return render json: { :text => 'Incorrect token' }, :status => 400
-    end
     channel = params['channel_id']
 
     # fidn the current game for this channel
@@ -151,9 +145,6 @@ class TicTacToeController < ApplicationController
   end
 
   def move
-    if not checkToken(params['token'], 'EKORPm7ibCmSLNMbVycwkR5t') then
-      return render json: { :text => 'Incorrect token' }, :status => 400
-    end
     channel = params['channel_id']
     userName = params['user_name']
     text = params['text']
@@ -223,10 +214,6 @@ class TicTacToeController < ApplicationController
 
   # delete the current ongoing game in the channel
   def del
-    if not checkToken(params['token'], 'eaGsF48NxM8J9bqDyRew1vHD') then
-      return render json: { :text => 'Incorrect token' }, :status => 400
-    end
-
     channel = params['channel_id']
     existing = Board.find_by(:channel => channel)
     if existing then
